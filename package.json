@@ -1,0 +1,22 @@
+{
+	"name": "com.gentlymadstudios.editorhelper",
+	"version": "0.1.0",
+	"displayName": "EditorHelper",
+	"description": "Editor Helper by Gentlymad Studios.",
+	"unity": "2022.1",
+	"unityRelease": "16f1",
+	"dependencies": {
+		    "com.gentlymadstudios.editorui": "0.1.0"
+	},
+	"keywords": [
+		"editor",
+    "unityeditor",
+    "editorhelper",
+		"gentlymad"
+	],
+	"author": {
+		"name": "Gentlymad Studios",
+		"url": "https://gentlymadstudios.com",
+		"email": "team@gentlymadstudios.com"
+	}
+}
