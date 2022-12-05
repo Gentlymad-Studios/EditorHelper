@@ -1,10 +1,13 @@
 {
 	"name": "com.gentlymadstudios.editorhelper",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"displayName": "EditorHelper",
 	"description": "Editor Helper by Gentlymad Studios.",
 	"unity": "2022.1",
 	"unityRelease": "16f1",
+	"documentationUrl": "https://github.com/Doppelkeks/TooltipGenerator/blob/master/README.md",
+  	"changelogUrl": "https://github.com/Doppelkeks/TooltipGenerator/blob/master/CHANGELOG.md",
+  	"licensesUrl": "https://github.com/Doppelkeks/TooltipGenerator/blob/master/LICENSE.md",
 	"dependencies": {
 		    "com.gentlymadstudios.editorui": "0.1.0"
 	},

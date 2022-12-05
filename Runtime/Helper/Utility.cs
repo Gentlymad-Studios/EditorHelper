@@ -1,5 +1,6 @@
 ﻿#if UNITY_EDITOR
 using System;
+using System.IO;
 using UnityEditor;
 using UnityEngine;
 
@@ -8,6 +9,45 @@ namespace EditorHelper {
     /// Helper class to handle common Editor scripting functions.
     /// </summary>
     public static class Utility {
+
+        public const string toolsFolderName = "Tools";
+        public const string settingsFolderName = "_Settings";
+        public const string relativeBasePathToSettings = toolsFolderName + "/" + settingsFolderName;
+        public const string assetsFolderName = "Assets";
+        public const string assetsBaseFolder = assetsFolderName + "/";
+        public const string scriptableObjectGenericFileEnding = ".asset";
+
+        /// <summary>
+        /// Get or create a Settings file that resides in the Tools folder in the correct place for a specific ScriptableObject type
+        /// </summary>
+        /// <typeparam name="T">The Scriptable Object type that we should create or get the asset for</typeparam>
+        /// <returns>The created or retrieved scriptable object type</returns>
+        public static T CreateSettingsFile<T>(string dataPath = null) where T : ScriptableObject {
+            // in case no data path was supllied, we use the standard one
+            if (dataPath == null) {
+                dataPath = Application.dataPath;
+            }
+
+            string assetFilename = typeof(T).Name + scriptableObjectGenericFileEnding;
+            string fullBaseAssetPath = Path.Combine(dataPath, relativeBasePathToSettings);
+            string fullFilepath = Path.Combine(fullBaseAssetPath, assetFilename);
+            string filePathRelativeToAssetFolder = Path.Combine(assetsBaseFolder, relativeBasePathToSettings, assetFilename);
+            
+            //Debug.Log(relativeBasePathToSettings + "\r\n" + assetFilename + "\r\n" + fullBaseAssetPath + "\r\n" + fullFilepath + "\r\n" + filePathRelativeToAssetFolder);
+
+            if (!Directory.Exists(fullBaseAssetPath)) {
+                //Debug.Log(fullBaseAssetPath);
+                Directory.CreateDirectory(fullBaseAssetPath);
+                AssetDatabase.Refresh();
+            }
+
+            if (!File.Exists(fullFilepath)) {
+                AssetDatabase.CreateAsset(ScriptableObject.CreateInstance<T>(), filePathRelativeToAssetFolder);
+                AssetDatabase.Refresh();
+            }
+
+            return AssetDatabase.LoadAssetAtPath<T>(filePathRelativeToAssetFolder);
+        }
 
         /// <summary>
         /// Resize an array by padding it.
