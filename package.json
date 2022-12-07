@@ -9,7 +9,7 @@
   	"changelogUrl": "https://github.com/Gentlymad-Studios/EditorHelper/blob/master/CHANGELOG.md",
   	"licensesUrl": "https://github.com/Gentlymad-Studios/EditorHelper/blob/master/LICENSE.md",
 	"dependencies": {
-		    "com.gentlymadstudios.editorui": "0.1.0"
+		    "com.gentlymadstudios.editorui": "https://github.com/Gentlymad-Studios/EditorUI.git"
 	},
 	"keywords": [
 		"editor",
