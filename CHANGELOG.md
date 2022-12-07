@@ -14,3 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - generic utility method to create scriptable object based settings files in a predefined folder (Tools/_Settings)
 - added path consts to folders we expect to create or to exist
+
+## [0.1.2] - 2022-12-07
+### Added
+- changes to meta files
