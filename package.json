@@ -8,8 +8,9 @@
 	"documentationUrl": "https://github.com/Gentlymad-Studios/EditorHelper/blob/master/README.md",
   	"changelogUrl": "https://github.com/Gentlymad-Studios/EditorHelper/blob/master/CHANGELOG.md",
   	"licensesUrl": "https://github.com/Gentlymad-Studios/EditorHelper/blob/master/LICENSE.md",
-	"dependencies": {
-		    "com.gentlymadstudios.editorui": "https://github.com/Gentlymad-Studios/EditorUI.git"
+	"dependencies": {},
+	"gitDependencies": {
+		"com.gentlymadstudios.editorui": "https://github.com/Gentlymad-Studios/EditorUI.git"
 	},
 	"keywords": [
 		"editor",
