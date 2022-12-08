@@ -9,7 +9,8 @@
   	"changelogUrl": "https://github.com/Gentlymad-Studios/EditorHelper/blob/master/CHANGELOG.md",
   	"licensesUrl": "https://github.com/Gentlymad-Studios/EditorHelper/blob/master/LICENSE.md",
 	"dependencies": {},
-	"gitDependencies": {
+	"custom_packageJsonLink": "https://raw.githubusercontent.com/Gentlymad-Studios/EditorHelper/master/package.json",
+	"custom_gitDependencies": {
 		"com.gentlymadstudios.editorui": "https://github.com/Gentlymad-Studios/EditorUI.git"
 	},
 	"keywords": [
