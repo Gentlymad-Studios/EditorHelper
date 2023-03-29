@@ -1,3 +1,16 @@
-﻿{
-	"name": "EditorHelper"
+{
+    "name": "EditorHelper",
+    "rootNamespace": "",
+    "references": [
+        "GUID:4b8fbe61ccdb9f44eb8e1283b5f248b5"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
 }

@@ -18,3 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.1.2] - 2022-12-07
 ### Added
 - changes to meta files
+
+## [0.1.3] - 2023-03-29
+### Added
+-settingsprovider for scriptable singletons
