@@ -21,4 +21,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.1.3] - 2023-03-29
 ### Added
--settingsprovider for scriptable singletons
+- settingsprovider for scriptable singletons
+
+## [0.1.4] - 2023-06-07
+### Added
+- method to get custom attribute from property
