@@ -3,12 +3,13 @@
 	"version": "0.1.4",
 	"displayName": "EditorHelper",
 	"description": "Editor Helper by Gentlymad Studios.",
-	"unity": "2022.1",
-	"unityRelease": "16f1",
+	"unity": "2022.2",
 	"documentationUrl": "https://github.com/Gentlymad-Studios/EditorHelper/blob/master/README.md",
   	"changelogUrl": "https://github.com/Gentlymad-Studios/EditorHelper/blob/master/CHANGELOG.md",
   	"licensesUrl": "https://github.com/Gentlymad-Studios/EditorHelper/blob/master/LICENSE.md",
-	"dependencies": {},
+	"dependencies": {
+		"com.unity.editorcoroutines" : "1.0.0"
+	},
 	"custom_packageJsonLink": "https://raw.githubusercontent.com/Gentlymad-Studios/EditorHelper/master/package.json",
 	"custom_gitDependencies": {
 		"com.gentlymadstudios.editorui": "https://github.com/Gentlymad-Studios/EditorUI.git"

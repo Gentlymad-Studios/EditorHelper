@@ -26,3 +26,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.1.4] - 2023-06-07
 ### Added
 - method to get custom attribute from property
+
+## [0.1.5] - 2023-06-23
+### Added
+- added ParticleSystemUtility.cs
+- added editor folder and new assembly definition for editor only classes

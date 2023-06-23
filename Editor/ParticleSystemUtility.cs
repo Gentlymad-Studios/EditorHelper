@@ -9,9 +9,17 @@ namespace ComponentTools {
     /// Utility class for managing Particle Systems in the Unity Editor.
     /// </summary>
     public static class ParticleSystemUtility {
+
+        /// <summary>
+        /// Dictionary to store the simulation coroutines for each ParticleSystem.
+        /// </summary>
         private static Dictionary<ParticleSystem, EditorCoroutine> _simulationCoroutinesByParticleSystem;
+
+        /// <summary>
+        /// Dictionary to store the auto random seed values for each ParticleSystem.
+        /// </summary>
         private static Dictionary<ParticleSystem, bool> _autoRandomSeedByParticleSystem;
-         
+
         /// <summary>
         /// Plays the Particle System inside the editor without having to select it. (If called during Play Mode, the Particle System will play as usual).
         /// </summary>
