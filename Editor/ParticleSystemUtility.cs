@@ -4,7 +4,7 @@ using UnityEngine;
 using Unity.EditorCoroutines.Editor;
 using System;
 
-namespace ComponentTools {
+namespace EditorHelper {
     /// <summary>
     /// Utility class for managing Particle Systems in the Unity Editor.
     /// </summary>
