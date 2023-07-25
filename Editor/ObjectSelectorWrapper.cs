@@ -12,6 +12,11 @@ public static class ObjectSelectorWrapper {
         T = System.Type.GetType("UnityEditor.ObjectSelector,UnityEditor");
     }
 
+    public static void NotifySelectionChanged() {
+        MethodInfo NotifySelectionChangedMethod = T.GetMethod("NotifySelectionChanged", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly);
+        NotifySelectionChangedMethod.Invoke(Get(), new object[] { false });
+    }
+
     public static void SetFilterString(string filter) {
         if (filter == null) filter = String.Empty;
         FieldInfo field = T.GetField("m_SearchFilter", BindingFlags.SetProperty | BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
