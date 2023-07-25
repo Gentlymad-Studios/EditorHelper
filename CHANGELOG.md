@@ -35,3 +35,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.1.6] - 2023-07-19
 ### Added
 - added AudioUtility.cs
+
+## [0.1.7] - 2023-07-25
+### Added
+- added ObjectSelectorWrapper.cs
