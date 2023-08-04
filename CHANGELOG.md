@@ -39,3 +39,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.1.7] - 2023-07-25
 ### Added
 - added ObjectSelectorWrapper.cs
+
+## [0.1.8] - 2023-08-04
+### Added
+- added HandleUtilityWrapper
+- added SceneHierarchyWrapper
+- added MeshUtility
+- added AssetUtility
+- added SceneUtility
+- added MeshRendererExtension
+### Changed
+- rename AudioUtility to AudioUtilWrapper
