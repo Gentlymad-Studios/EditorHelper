@@ -50,3 +50,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - added MeshRendererExtension
 ### Changed
 - rename AudioUtility to AudioUtilWrapper
+
+## [0.1.9] - 2023-08-09
+### Added
+- added Mesh List to SceneUtility

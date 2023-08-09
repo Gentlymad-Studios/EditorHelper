@@ -6,6 +6,7 @@ using UnityEngine;
 namespace EditorHelper {
     public static class SceneUtility {
         static MeshFilter[] _allMeshFilter;
+        static List<Mesh> _allMeshes;
         static GameObject _dragObject;
         static bool _updateMeshFilter = true;
         static bool _updateDragObject = true;
@@ -29,30 +30,11 @@ namespace EditorHelper {
 		/// </summary>
 		/// <param name="ray"></param>
 		/// <param name="hits"></param>
-		/// <param name="ignoreHidden"></param>
 		/// <param name="force">if true, it will update the cached meshes</param>
 		/// <returns>true if success</returns>
-		public static bool GetHits(Ray ray, out List<HitObjects> hits, bool ignoreHidden = true, bool force = false) {
+		public static bool GetHits(Ray ray, out List<HitObjects> hits, bool force = false) {
             //gather all meshfilter
-            if (_updateMeshFilter || force) {
-                PrefabStage prefabStage = PrefabStageUtility.GetCurrentPrefabStage();
-                if (prefabStage == null) {
-                    _allMeshFilter = GameObject.FindObjectsOfType<MeshFilter>();
-                } else {
-                    _allMeshFilter = StageUtility.GetCurrentStageHandle().FindComponentsOfType<MeshFilter>();
-                }
-
-                _updateMeshFilter = false;
-
-                List<MeshFilter> tmp = new List<MeshFilter>();
-                for (int i = 0; i < _allMeshFilter.Length; i++) {
-                    if (_allMeshFilter[i].hideFlags != HideFlags.HideInHierarchy) {
-                        tmp.Add(_allMeshFilter[i]);
-                    }
-                }
-
-                _allMeshFilter = tmp.ToArray();
-            }
+            GetMeshFilterFromScene(force);
 
             hits = new List<HitObjects>();
 
@@ -102,6 +84,47 @@ namespace EditorHelper {
             }
 
             return _dragObject;
+        }
+
+        /// <summary>
+        /// Extracts all MeshFilter from Scene
+        /// </summary>
+        /// <returns></returns>
+        public static MeshFilter[] GetMeshFilterFromScene(bool force = false) {
+            //gather all meshfilter
+            if (_updateMeshFilter || force) {
+                PrefabStage prefabStage = PrefabStageUtility.GetCurrentPrefabStage();
+                if (prefabStage == null) {
+                    _allMeshFilter = GameObject.FindObjectsOfType<MeshFilter>();
+                } else {
+                    _allMeshFilter = StageUtility.GetCurrentStageHandle().FindComponentsOfType<MeshFilter>();
+                }
+
+                _updateMeshFilter = false;
+
+                _allMeshes = new List<Mesh>();
+                List<MeshFilter> tmp = new List<MeshFilter>();
+                for (int i = 0; i < _allMeshFilter.Length; i++) {
+                    if (_allMeshFilter[i].hideFlags != HideFlags.HideInHierarchy) {
+                        tmp.Add(_allMeshFilter[i]);
+                        _allMeshes.Add(_allMeshFilter[i].sharedMesh);
+                    }
+                }
+
+                _allMeshFilter = tmp.ToArray();
+            }
+
+            return _allMeshFilter;
+        }
+
+        /// <summary>
+        /// Returns all Meshes from scene
+        /// </summary>
+        /// <param name="force"></param>
+        /// <returns></returns>
+        public static List<Mesh> GetMeshesFromScene(bool force = false) {
+            GetMeshFilterFromScene(force);
+            return _allMeshes;
         }
     }
 
