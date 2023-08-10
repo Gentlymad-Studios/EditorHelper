@@ -6,7 +6,7 @@ using UnityEngine;
 namespace EditorHelper {
     public static class SceneUtility {
         static MeshFilter[] _allMeshFilter;
-        static List<Mesh> _allMeshes;
+        static List<GlobalMesh> _allMeshes;
         static GameObject _dragObject;
         static bool _updateMeshFilter = true;
         static bool _updateDragObject = true;
@@ -102,12 +102,12 @@ namespace EditorHelper {
 
                 _updateMeshFilter = false;
 
-                _allMeshes = new List<Mesh>();
+                _allMeshes = new List<GlobalMesh>();
                 List<MeshFilter> tmp = new List<MeshFilter>();
                 for (int i = 0; i < _allMeshFilter.Length; i++) {
                     if (_allMeshFilter[i].hideFlags != HideFlags.HideInHierarchy) {
                         tmp.Add(_allMeshFilter[i]);
-                        _allMeshes.Add(_allMeshFilter[i].sharedMesh);
+                        _allMeshes.Add(new GlobalMesh(_allMeshFilter[i]));
                     }
                 }
 
@@ -122,7 +122,7 @@ namespace EditorHelper {
         /// </summary>
         /// <param name="force"></param>
         /// <returns></returns>
-        public static List<Mesh> GetMeshesFromScene(bool force = false) {
+        public static List<GlobalMesh> GetMeshesFromScene(bool force = false) {
             GetMeshFilterFromScene(force);
             return _allMeshes;
         }
@@ -137,6 +137,16 @@ namespace EditorHelper {
             this.hit = hit;
             this.meshFilter = meshFilter;
             this.distance = hit.distance;
+        }
+    }
+
+    public class GlobalMesh {
+        public Mesh mesh;
+        public Transform transform;
+
+        public GlobalMesh(MeshFilter meshFilter) {
+            mesh = meshFilter.sharedMesh;
+            transform = meshFilter.transform;
         }
     }
 }
