@@ -17,7 +17,8 @@ namespace EditorHelper {
                     Quaternion rot = rotation * mrb.rotationOffset;
                     Vector3 pos = position + rotation * mrb.positionOffset;
 
-                    Graphics.DrawMesh(mrb.mesh, pos, rot, mrb.material, 0, Camera.current, mrb.submeshIndex);
+                    Matrix4x4 matrix = Matrix4x4.TRS(pos, rot, mrb.scaleOffset);
+                    Graphics.DrawMesh(mrb.mesh, matrix, mrb.material, 0, Camera.current, mrb.submeshIndex);
                 }
             }
         }
@@ -38,7 +39,7 @@ namespace EditorHelper {
                 Material[] materials = meshRenderer[i].sharedMaterials;
 
                 for (int j = 0; j < materials.Length; j++) {
-                    meshRenderBundle.Add(new MeshRenderBundle(mesh, materials[j], j, meshRenderer[i].transform.position, meshRenderer[i].transform.rotation));
+                    meshRenderBundle.Add(new MeshRenderBundle(mesh, materials[j], j, meshRenderer[i].transform.position, meshRenderer[i].transform.rotation, meshRenderer[i].transform.lossyScale));
                 }
             }
         }
@@ -50,13 +51,15 @@ namespace EditorHelper {
         public int submeshIndex;
         public Vector3 positionOffset;
         public Quaternion rotationOffset;
+        public Vector3 scaleOffset;
 
-        public MeshRenderBundle(Mesh mesh, Material material, int submeshIndex, Vector3 positionOffset, Quaternion rotationOffset) {
+        public MeshRenderBundle(Mesh mesh, Material material, int submeshIndex, Vector3 positionOffset, Quaternion rotationOffset, Vector3 scaleOffset) {
             this.mesh = mesh;
             this.material = material;
             this.submeshIndex = submeshIndex;
             this.positionOffset = positionOffset;
             this.rotationOffset = rotationOffset;
+            this.scaleOffset = scaleOffset;
         }
     }
 }

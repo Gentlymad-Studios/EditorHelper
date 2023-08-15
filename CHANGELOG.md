@@ -60,3 +60,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - added MeshDrawer
 ### Changed
 - SceneUtility now stores MeshData in combination with an world transform
+
+## [0.2.1] - 2023-08-15
+### Changed
+- MeshDrawer now recognize scale
