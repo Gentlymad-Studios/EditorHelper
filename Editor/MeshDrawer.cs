@@ -8,7 +8,8 @@ namespace EditorHelper {
 		/// </summary>
 		/// <param name="position"></param>
 		/// <param name="rotation"></param>
-		public static void DrawMesh(MeshVisual meshVisual, Vector3 position, Quaternion rotation) {
+		/// <param name="scale"></param>
+		public static void DrawMesh(MeshVisual meshVisual, Vector3 position, Quaternion rotation, Vector3 scale) {
             if (meshVisual != null) {
                 List<MeshRenderBundle> meshRenderBundle = meshVisual.meshRenderBundle;
                 for (int i = 0; i < meshRenderBundle.Count; i++) {
@@ -16,8 +17,9 @@ namespace EditorHelper {
 
                     Quaternion rot = rotation * mrb.rotationOffset;
                     Vector3 pos = position + rotation * mrb.positionOffset;
+                    Vector3 scl = Vector3.Scale(scale, mrb.scaleOffset);
 
-                    Matrix4x4 matrix = Matrix4x4.TRS(pos, rot, mrb.scaleOffset);
+                    Matrix4x4 matrix = Matrix4x4.TRS(pos, rot, scl);
                     Graphics.DrawMesh(mrb.mesh, matrix, mrb.material, 0, Camera.current, mrb.submeshIndex);
                 }
             }

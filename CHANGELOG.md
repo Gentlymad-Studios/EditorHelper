@@ -64,3 +64,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.2.1] - 2023-08-15
 ### Changed
 - MeshDrawer now recognize scale
+
+## [0.2.2] - 2023-09-13
+### Changed
+- MeshDrawer got an scale override
