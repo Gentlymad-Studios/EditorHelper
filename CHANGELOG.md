@@ -68,3 +68,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.2.2] - 2023-09-13
 ### Changed
 - MeshDrawer got an scale override
+
+## [0.2.3] - 2023-09-19
+### Added
+- add update method to MeshVisual

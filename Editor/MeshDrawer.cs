@@ -34,6 +34,13 @@ namespace EditorHelper {
             this.asset = asset;
 
             meshRenderBundle = new List<MeshRenderBundle>();
+
+            Update();
+        }
+
+        public void Update() {
+            meshRenderBundle.Clear();
+
             MeshRenderer[] meshRenderer = asset.GetComponentsInChildren<MeshRenderer>();
 
             for (int i = 0; i < meshRenderer.Length; i++) {
