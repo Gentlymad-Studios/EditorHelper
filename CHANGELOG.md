@@ -72,3 +72,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.2.3] - 2023-09-19
 ### Added
 - add update method to MeshVisual
+
+## [0.2.3] - 2023-09-19
+### Added
+- add materialPropertyBlock support to MeshVisual

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -20,7 +21,7 @@ namespace EditorHelper {
                     Vector3 scl = Vector3.Scale(scale, mrb.scaleOffset);
 
                     Matrix4x4 matrix = Matrix4x4.TRS(pos, rot, scl);
-                    Graphics.DrawMesh(mrb.mesh, matrix, mrb.material, 0, Camera.current, mrb.submeshIndex);
+                    Graphics.DrawMesh(mrb.mesh, matrix, mrb.material, 0, Camera.current, mrb.submeshIndex, mrb.materialPropertyBlock);
                 }
             }
         }
@@ -29,9 +30,13 @@ namespace EditorHelper {
     public class MeshVisual {
         public List<MeshRenderBundle> meshRenderBundle;
         GameObject asset;
+        MaterialPropertyBlock globalMatPropertyBlock;
+        Func<GameObject, MaterialPropertyBlock> matPropertyBlockExtration;
 
-        public MeshVisual(GameObject asset) {
+        public MeshVisual(GameObject asset, MaterialPropertyBlock materialPropertyBlock = null, Func<GameObject, MaterialPropertyBlock> matPropertyBlockExtration = null) {
             this.asset = asset;
+            globalMatPropertyBlock = materialPropertyBlock;
+            this.matPropertyBlockExtration = matPropertyBlockExtration;
 
             meshRenderBundle = new List<MeshRenderBundle>();
 
@@ -47,8 +52,12 @@ namespace EditorHelper {
                 Mesh mesh = meshRenderer[i].GetComponent<MeshFilter>().sharedMesh;
                 Material[] materials = meshRenderer[i].sharedMaterials;
 
+                if (matPropertyBlockExtration != null) {
+                    globalMatPropertyBlock = matPropertyBlockExtration.Invoke(meshRenderer[i].gameObject);
+                }
+
                 for (int j = 0; j < materials.Length; j++) {
-                    meshRenderBundle.Add(new MeshRenderBundle(mesh, materials[j], j, meshRenderer[i].transform.position, meshRenderer[i].transform.rotation, meshRenderer[i].transform.lossyScale));
+                    meshRenderBundle.Add(new MeshRenderBundle(mesh, materials[j], globalMatPropertyBlock, j, meshRenderer[i].transform.position, meshRenderer[i].transform.rotation, meshRenderer[i].transform.lossyScale));
                 }
             }
         }
@@ -57,14 +66,16 @@ namespace EditorHelper {
     public class MeshRenderBundle {
         public Mesh mesh;
         public Material material;
+        public MaterialPropertyBlock materialPropertyBlock;
         public int submeshIndex;
         public Vector3 positionOffset;
         public Quaternion rotationOffset;
         public Vector3 scaleOffset;
 
-        public MeshRenderBundle(Mesh mesh, Material material, int submeshIndex, Vector3 positionOffset, Quaternion rotationOffset, Vector3 scaleOffset) {
+        public MeshRenderBundle(Mesh mesh, Material material, MaterialPropertyBlock materialPropertyBlock, int submeshIndex, Vector3 positionOffset, Quaternion rotationOffset, Vector3 scaleOffset) {
             this.mesh = mesh;
             this.material = material;
+            this.materialPropertyBlock = materialPropertyBlock;
             this.submeshIndex = submeshIndex;
             this.positionOffset = positionOffset;
             this.rotationOffset = rotationOffset;
