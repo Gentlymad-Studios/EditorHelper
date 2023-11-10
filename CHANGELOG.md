@@ -80,3 +80,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.2.5] - 2023-11-09
 ### Added
 - MeshInstanceDrawer
+
+## [0.2.6] - 2023-11-10
+### Added
+- add AnnotationUtilityWrapper
