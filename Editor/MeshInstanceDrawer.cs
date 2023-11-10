@@ -36,7 +36,9 @@ namespace EditorHelper {
 
             for (int i = 0; i < data.Length; i++) {
                 int index = data[i].InstanceIndex;
-                transforms[index].Add(data[i].TransformMatrix);
+                if (index > 0 && index < transforms.Length) {
+                    transforms[index].Add(data[i].TransformMatrix);
+                }
             }
         }
 
@@ -117,7 +119,9 @@ namespace EditorHelper {
 
             for (int i = 0; i < data.Length; i++) {
                 int index = data[i].InstanceIndex;
-                transforms[index].Add(data[i].TransformMatrix);
+                if (index > 0 && index < transforms.Length) {
+                    transforms[index].Add(data[i].TransformMatrix);
+                }
             }
         }
 
