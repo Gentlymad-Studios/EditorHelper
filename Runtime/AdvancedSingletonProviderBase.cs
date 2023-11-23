@@ -127,7 +127,7 @@ namespace EditorHelper {
 		/// Called when any value changed.
 		/// </summary>
 		/// <param name="evt"></param>
-		private void ValueChanged(SerializedPropertyChangeEvent evt) {
+		protected virtual void ValueChanged(SerializedPropertyChangeEvent evt) {
 			// notify all listeneres (ReactiveSettings)
 			serializedObject.ApplyModifiedProperties();
 
