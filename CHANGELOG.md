@@ -88,3 +88,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.2.7] - 2023-11-22
 ## Added
 - added AdvancedSettings and AdvancedSingletonProviderBase to further minimize the amount of boilerplate code needed to create custom project settings
+
+## [0.2.8] - 2023-11-24
+## Added
+- added yet another settings provider (SimpleSettingsProviver and SimpleSettings) which is simplified and does not use reflection
