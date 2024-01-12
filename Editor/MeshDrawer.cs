@@ -7,20 +7,34 @@ namespace EditorHelper {
         /// <summary>
 		/// Draw Mesh Visual with the given transform
 		/// </summary>
+        /// <param name="meshVisual"></param>
 		/// <param name="position"></param>
 		/// <param name="rotation"></param>
 		/// <param name="scale"></param>
 		public static void DrawMesh(MeshVisual meshVisual, Vector3 position, Quaternion rotation, Vector3 scale) {
+            DrawMesh(meshVisual, position, rotation, scale, Vector3.zero);
+        }
+
+        /// <summary>
+        /// Draw Mesh Visual with the given transform
+        /// </summary>
+        /// <param name="meshVisual"></param>
+        /// <param name="position"></param>
+        /// <param name="rotation"></param>
+        /// <param name="scale"></param>
+        /// <param name="parentPosition">Position of an optinal Parent</param>
+        public static void DrawMesh(MeshVisual meshVisual, Vector3 position, Quaternion rotation, Vector3 scale, Vector3 parentPosition) {
             if (meshVisual != null) {
                 List<MeshRenderBundle> meshRenderBundle = meshVisual.meshRenderBundle;
                 for (int i = 0; i < meshRenderBundle.Count; i++) {
                     MeshRenderBundle mrb = meshRenderBundle[i];
 
                     Quaternion rot = rotation * mrb.rotationOffset;
-                    Vector3 pos = position + rotation * mrb.positionOffset;
+                    Vector3 pos = position + rotation * (mrb.positionOffset - parentPosition);
                     Vector3 scl = Vector3.Scale(scale, mrb.scaleOffset);
 
                     Matrix4x4 matrix = Matrix4x4.TRS(pos, rot, scl);
+
                     Graphics.DrawMesh(mrb.mesh, matrix, mrb.material, 0, Camera.current, mrb.submeshIndex, mrb.materialPropertyBlock);
                 }
             }

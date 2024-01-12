@@ -92,3 +92,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.2.8] - 2023-11-24
 ## Added
 - added yet another settings provider (SimpleSettingsProviver and SimpleSettings) which is simplified and does not use reflection
+
+## [0.2.9] - 2024-01-12
+## Added
+- MeshDrawer now supports an parent position
