@@ -96,3 +96,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.2.9] - 2024-01-12
 ## Added
 - MeshDrawer now supports an parent position
+
+## [0.3.0] - 2024-01-12
+## Added
+- MeshDrawer now supports SkinnedMeshRenderers
