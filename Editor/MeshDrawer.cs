@@ -61,7 +61,6 @@ namespace EditorHelper {
             meshRenderBundle.Clear();
 
             MeshRenderer[] meshRenderer = asset.GetComponentsInChildren<MeshRenderer>();
-
             for (int i = 0; i < meshRenderer.Length; i++) {
                 Mesh mesh = meshRenderer[i].GetComponent<MeshFilter>().sharedMesh;
                 Material[] materials = meshRenderer[i].sharedMaterials;
@@ -72,6 +71,20 @@ namespace EditorHelper {
 
                 for (int j = 0; j < materials.Length; j++) {
                     meshRenderBundle.Add(new MeshRenderBundle(mesh, materials[j], globalMatPropertyBlock, j, meshRenderer[i].transform.position, meshRenderer[i].transform.rotation, meshRenderer[i].transform.lossyScale));
+                }
+            }
+
+            SkinnedMeshRenderer[] skinnedMeshRenderer = asset.GetComponentsInChildren<SkinnedMeshRenderer>();
+            for (int i = 0; i < skinnedMeshRenderer.Length; i++) {
+                Mesh mesh = skinnedMeshRenderer[i].sharedMesh;
+                Material[] materials = skinnedMeshRenderer[i].sharedMaterials;
+
+                if (matPropertyBlockExtration != null) {
+                    globalMatPropertyBlock = matPropertyBlockExtration.Invoke(skinnedMeshRenderer[i].gameObject);
+                }
+
+                for (int j = 0; j < materials.Length; j++) {
+                    meshRenderBundle.Add(new MeshRenderBundle(mesh, materials[j], globalMatPropertyBlock, j, skinnedMeshRenderer[i].transform.position, skinnedMeshRenderer[i].transform.rotation, skinnedMeshRenderer[i].transform.lossyScale));
                 }
             }
         }
