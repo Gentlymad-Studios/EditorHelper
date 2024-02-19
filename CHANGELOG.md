@@ -100,3 +100,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.3.0] - 2024-01-12
 ## Added
 - MeshDrawer now supports SkinnedMeshRenderers
+
+## [0.3.1] - 2024-01-12
+## Added
+- add PrefabStageWrapper
