@@ -46,11 +46,13 @@ namespace EditorHelper {
         GameObject asset;
         MaterialPropertyBlock globalMatPropertyBlock;
         Func<GameObject, MaterialPropertyBlock> matPropertyBlockExtration;
+        bool includeChildren;
 
-        public MeshVisual(GameObject asset, MaterialPropertyBlock materialPropertyBlock = null, Func<GameObject, MaterialPropertyBlock> matPropertyBlockExtration = null) {
+        public MeshVisual(GameObject asset, MaterialPropertyBlock materialPropertyBlock = null, Func<GameObject, MaterialPropertyBlock> matPropertyBlockExtration = null, bool includeChildren = true) {
             this.asset = asset;
             globalMatPropertyBlock = materialPropertyBlock;
             this.matPropertyBlockExtration = matPropertyBlockExtration;
+            this.includeChildren = includeChildren;
 
             meshRenderBundle = new List<MeshRenderBundle>();
 
@@ -60,7 +62,13 @@ namespace EditorHelper {
         public void Update() {
             meshRenderBundle.Clear();
 
-            MeshRenderer[] meshRenderer = asset.GetComponentsInChildren<MeshRenderer>();
+            MeshRenderer[] meshRenderer = new MeshRenderer[1];
+
+            if (includeChildren) {
+                meshRenderer = asset.GetComponentsInChildren<MeshRenderer>();
+            } else {
+                meshRenderer[0] = asset.GetComponent<MeshRenderer>();
+            }
             for (int i = 0; i < meshRenderer.Length; i++) {
                 Mesh mesh = meshRenderer[i].GetComponent<MeshFilter>().sharedMesh;
                 Material[] materials = meshRenderer[i].sharedMaterials;
@@ -74,7 +82,12 @@ namespace EditorHelper {
                 }
             }
 
-            SkinnedMeshRenderer[] skinnedMeshRenderer = asset.GetComponentsInChildren<SkinnedMeshRenderer>();
+            SkinnedMeshRenderer[] skinnedMeshRenderer = new SkinnedMeshRenderer[1]; 
+            if (includeChildren) {
+                skinnedMeshRenderer = asset.GetComponentsInChildren<SkinnedMeshRenderer>();
+            } else {
+                skinnedMeshRenderer[0] = asset.GetComponent<SkinnedMeshRenderer>();
+            }
             for (int i = 0; i < skinnedMeshRenderer.Length; i++) {
                 Mesh mesh = skinnedMeshRenderer[i].sharedMesh;
                 Material[] materials = skinnedMeshRenderer[i].sharedMaterials;

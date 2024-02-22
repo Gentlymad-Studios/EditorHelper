@@ -104,3 +104,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.3.1] - 2024-01-12
 ## Added
 - add PrefabStageWrapper
+
+## [0.3.2] - 2024-01-12
+## Added
+- add includeChildren parameter to MeshVisual
