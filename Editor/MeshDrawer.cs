@@ -67,9 +67,12 @@ namespace EditorHelper {
             if (includeChildren) {
                 meshRenderer = asset.GetComponentsInChildren<MeshRenderer>();
             } else {
-                meshRenderer[0] = asset.GetComponent<MeshRenderer>();
+                asset.TryGetComponent(out meshRenderer[0]);
             }
             for (int i = 0; i < meshRenderer.Length; i++) {
+                if (meshRenderer[i] == null) {
+                    continue;
+                }
                 Mesh mesh = meshRenderer[i].GetComponent<MeshFilter>().sharedMesh;
                 Material[] materials = meshRenderer[i].sharedMaterials;
 
@@ -86,9 +89,12 @@ namespace EditorHelper {
             if (includeChildren) {
                 skinnedMeshRenderer = asset.GetComponentsInChildren<SkinnedMeshRenderer>();
             } else {
-                skinnedMeshRenderer[0] = asset.GetComponent<SkinnedMeshRenderer>();
+                asset.TryGetComponent(out skinnedMeshRenderer[0]);
             }
             for (int i = 0; i < skinnedMeshRenderer.Length; i++) {
+                if (skinnedMeshRenderer[i] == null) {
+                    continue;
+                }
                 Mesh mesh = skinnedMeshRenderer[i].sharedMesh;
                 Material[] materials = skinnedMeshRenderer[i].sharedMaterials;
 
