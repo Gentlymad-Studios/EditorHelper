@@ -2,6 +2,27 @@ using UnityEngine;
 
 namespace EditorHelper {
     public static class MeshUtility {
+
+        /// <summary>
+        /// Get the Triangle for the given hit
+        /// </summary>
+        /// <param name="meshFilter"></param>
+        /// <param name="hit"></param>
+        /// <returns></returns>
+        public static Vector3[] GetTriangle(MeshFilter meshFilter, RaycastHit hit) {
+            Mesh mesh = meshFilter.sharedMesh;
+
+            Vector3[] vertices = mesh.vertices;
+            int[] triangles = mesh.triangles;
+
+            Vector3[] triangle = new Vector3[3];
+            triangle[0] = vertices[triangles[hit.triangleIndex * 3 + 0]];
+            triangle[1] = vertices[triangles[hit.triangleIndex * 3 + 1]];
+            triangle[2] = vertices[triangles[hit.triangleIndex * 3 + 2]];
+
+            return triangle;
+        }
+
         /// <summary>
         /// Get Normal for the given hit
         /// </summary>
