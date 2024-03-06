@@ -17,9 +17,9 @@ namespace EditorHelper {
             int[] triangles = mesh.triangles;
 
             Vector3[] triangle = new Vector3[3];
-            triangle[0] = transform.TransformDirection(vertices[triangles[hit.triangleIndex * 3 + 0]]);
-            triangle[1] = transform.TransformDirection(vertices[triangles[hit.triangleIndex * 3 + 1]]);
-            triangle[2] = transform.TransformDirection(vertices[triangles[hit.triangleIndex * 3 + 2]]);
+            triangle[0] = transform.TransformPoint(vertices[triangles[hit.triangleIndex * 3 + 0]]);
+            triangle[1] = transform.TransformPoint(vertices[triangles[hit.triangleIndex * 3 + 1]]);
+            triangle[2] = transform.TransformPoint(vertices[triangles[hit.triangleIndex * 3 + 2]]);
 
             return triangle;
         }
