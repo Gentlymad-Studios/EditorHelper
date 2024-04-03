@@ -108,3 +108,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.3.2] - 2024-01-12
 ## Added
 - add includeChildren parameter to MeshVisual
+
+## [0.3.3] - 2024-04-03
+## Added
+- add GetVertexColorForTriangle to MeshUtility

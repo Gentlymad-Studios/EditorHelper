@@ -4,6 +4,25 @@ namespace EditorHelper {
     public static class MeshUtility {
 
         /// <summary>
+        /// Get the VertexColors of the Triangle for the given hit
+        /// </summary>
+        /// <param name="meshFilter"></param>
+        /// <param name="hit"></param>
+        /// <returns></returns>
+        public static Color[] GetVertexColorForTriangle(MeshFilter meshFilter, RaycastHit hit) {
+            Mesh mesh = meshFilter.sharedMesh;
+
+            int[] triangles = mesh.triangles;
+            Color[] colors = mesh.colors;
+
+            Color[] color = new Color[3];
+            color[0] = colors[triangles[hit.triangleIndex * 3 + 0]];
+            color[1] = colors[triangles[hit.triangleIndex * 3 + 1]];
+            color[2] = colors[triangles[hit.triangleIndex * 3 + 2]];
+
+            return color;
+        }
+        /// <summary>
         /// Get the Triangle for the given hit
         /// </summary>
         /// <param name="meshFilter"></param>
