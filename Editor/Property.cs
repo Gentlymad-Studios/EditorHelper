@@ -27,6 +27,9 @@ namespace EditorHelper {
 
         public static T GetCustomAttributeFromProperty<T>(SerializedProperty prop) where T : System.Attribute {
             FieldInfo info = GetFieldInfoAndStaticType(prop, out _);
+            if (info == null) {
+                return null;
+            }
             return info.GetCustomAttribute<T>();
         }
     }
