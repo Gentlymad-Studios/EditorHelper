@@ -54,6 +54,31 @@ namespace EditorHelper {
         }
 
         /// <summary>
+        /// Get the Closest Hit to all given meshes
+        /// </summary>
+        /// <param name="ray"></param>
+        /// <param name="meshFilter"></param>
+        /// <param name="hits"></param>
+        /// <returns>true if success</returns>
+        public static bool GetHits(Ray ray, MeshFilter[] meshFilter, out List<HitObjects> hits) {
+            hits = new List<HitObjects>();
+
+            for (int i = 0; i < meshFilter.Length; i++) {
+                if (HandleUtilityWrapper.IntersectRayMesh(ray, meshFilter[i], out RaycastHit raycastHit)) {
+                    hits.Add(new HitObjects(raycastHit, meshFilter[i]));
+                }
+            }
+
+            if (hits.Count == 0) {
+                return false;
+            }
+
+            hits = hits.OrderBy(o => o.distance).ToList();
+
+            return true;
+        }
+
+        /// <summary>
 		/// Get the Dragged Object from Hierarchy
 		/// </summary>
 		/// <param name="reference"></param>

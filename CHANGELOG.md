@@ -112,3 +112,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.3.3] - 2024-04-03
 ## Added
 - add GetVertexColorForTriangle to MeshUtility
+
+## [0.3.4] - 2024-07-10
+## Added
+- add GetHits with cutom Meshfilter
