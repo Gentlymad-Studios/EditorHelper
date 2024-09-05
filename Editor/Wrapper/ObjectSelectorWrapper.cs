@@ -7,10 +7,10 @@ using UnityEditor;
 /// </summary>
 namespace EditorHelper {
     public static class ObjectSelectorWrapper {
-        private static System.Type T;
+        private static Type T;
         private static bool oldState = false;
         static ObjectSelectorWrapper() {
-            T = System.Type.GetType("UnityEditor.ObjectSelector,UnityEditor");
+            T = Type.GetType("UnityEditor.ObjectSelector,UnityEditor");
         }
 
         public static void NotifySelectionChanged() {
@@ -19,7 +19,7 @@ namespace EditorHelper {
         }
 
         public static void SetFilterString(string filter) {
-            if (filter == null) filter = String.Empty;
+            if (filter == null) filter = string.Empty;
             FieldInfo field = T.GetField("m_SearchFilter", BindingFlags.SetProperty | BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
             field.SetValue(Get(), filter);
         }
@@ -28,7 +28,7 @@ namespace EditorHelper {
             PropertyInfo P = T.GetProperty("get", BindingFlags.Public | BindingFlags.Static);
             return P.GetValue(null, null) as EditorWindow;
         }
-        public static void ShowSelector(System.Type aRequiredType) {
+        public static void ShowSelector(Type aRequiredType) {
             MethodInfo ShowMethod = T.GetMethod("Show", BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
             ShowMethod.Invoke(Get(), new object[] { null, aRequiredType, null, true });
         }

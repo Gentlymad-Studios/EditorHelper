@@ -116,3 +116,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.3.4] - 2024-07-10
 ## Added
 - add GetHits with cutom Meshfilter
+
+## [0.3.5] - 2024-09-05
+## Added
+- add Wrapper for ProjectWindow/ProjectBrowser
+### Changed
+- tweaked some Wrapper
