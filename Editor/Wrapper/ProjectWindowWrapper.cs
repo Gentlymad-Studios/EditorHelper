@@ -13,6 +13,7 @@ namespace EditorHelper {
         //ProjectWindowUtil related
         private static Type projectWindowUtilType;
         private static MethodInfo getActiveFolderPathMethod;
+        private static MethodInfo getProjectBrowserIfExistsMethod;
 
         static ProjectWindowWrapper() {
             projectBrowserType = Type.GetType("UnityEditor.ProjectBrowser,UnityEditor");
@@ -22,6 +23,32 @@ namespace EditorHelper {
 
             projectWindowUtilType = typeof(ProjectWindowUtil);
             getActiveFolderPathMethod = projectWindowUtilType.GetMethod("GetActiveFolderPath", BindingFlags.Static | BindingFlags.NonPublic);
+            getProjectBrowserIfExistsMethod = projectWindowUtilType.GetMethod("GetProjectBrowserIfExists", BindingFlags.Static | BindingFlags.NonPublic);
+        }
+
+        /// <summary>
+        /// Select an asset by the given path
+        /// </summary>
+        /// <param name="path">path of the asset or just a folder</param>
+        /// <param name="ping">ping the selection</param>
+        /// <param name="force">force the selection</param>
+        public static void SelectAsset(string path, bool ping = false, bool force = false) {
+            bool wasLocked = false;
+            if (force && GetProjectBrowserLock()) {
+                SetProjectBrowserLock(false);
+                wasLocked = true;
+            }
+
+            UnityEngine.Object asset = AssetDatabase.LoadAssetAtPath<UnityEngine.Object>(path);
+            Selection.activeObject = asset;
+
+            if (ping) {
+                EditorGUIUtility.PingObject(asset);
+            }
+
+            if (wasLocked) {
+                SetProjectBrowserLock(true);
+            }
         }
 
         /// <summary>
@@ -29,8 +56,21 @@ namespace EditorHelper {
         /// </summary>
         /// <returns></returns>
         public static string GetActiveFolderPath() {
-            return getActiveFolderPathMethod.Invoke(null, new object[0]).ToString();
-        } 
+            object activeFolderPath = getActiveFolderPathMethod.Invoke(null, new object[0]);
+            return activeFolderPath == null ? string.Empty : activeFolderPath.ToString();
+        }
+
+        /// <summary>
+        /// Returns an Array of selected folders
+        /// </summary>
+        /// <returns></returns>
+        public static string[] GetSelectedFolder() {
+            object projectBrowser = GetProjectBrowserIfExists();
+            FieldInfo searchFilter_FieldInfo = projectBrowser.GetType().GetField("m_SearchFilter", BindingFlags.NonPublic | BindingFlags.Instance);
+            object searchFilter = searchFilter_FieldInfo.GetValue(projectBrowser);
+            PropertyInfo folders_Property = searchFilter.GetType().GetProperty("folders");
+            return folders_Property.GetValue(searchFilter) as string[];
+        }
 
         /// <summary>
         /// Get the Lock of the last interacted ProjectBrowser
@@ -64,6 +104,14 @@ namespace EditorHelper {
         /// <returns></returns>
         public static object GetLastInteractedProjectBrowser() {
             return lastInteractedProjectBrowserField.GetValue(null);
+        }
+
+        /// <summary>
+        /// Returns a ProjectBrowser if exists
+        /// </summary>
+        /// <returns></returns>
+        public static object GetProjectBrowserIfExists() {
+            return getProjectBrowserIfExistsMethod.Invoke(null, new object[0]);
         }
     }
 }
