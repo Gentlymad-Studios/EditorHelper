@@ -30,11 +30,14 @@ namespace EditorHelper {
                 for (int i = 0; i < meshRenderBundle.Count; i++) {
                     MeshRenderBundle mrb = meshRenderBundle[i];
 
-                    Quaternion rot = rotation * mrb.rotationOffset;
-                    Vector3 pos = position + rotation * (mrb.positionOffset - parentPosition);
-                    Vector3 scl = Vector3.Scale(scale, mrb.scaleOffset);
+                    Vector3 localOffset = mrb.positionOffset - parentPosition;
+                    Vector3 scaledOffset = Vector3.Scale(localOffset, scale);
+                    Vector3 rotatedOffset = rotation * scaledOffset;
+                    Vector3 finalPosition = position + rotatedOffset;
+                    Quaternion finalRotation = rotation * mrb.rotationOffset;
+                    Vector3 finalScale = Vector3.Scale(scale, mrb.scaleOffset);
 
-                    Matrix4x4 matrix = Matrix4x4.TRS(pos, rot, scl);
+                    Matrix4x4 matrix = Matrix4x4.TRS(finalPosition, finalRotation, finalScale);
 
                     if (propertyBlockOverride == null) {
                         Graphics.DrawMesh(mrb.mesh, matrix, mrb.material, 0, Camera.current, mrb.submeshIndex, mrb.materialPropertyBlock);

@@ -122,3 +122,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - add Wrapper for ProjectWindow/ProjectBrowser
 ### Changed
 - tweaked some Wrapper
+
+## [0.3.6] - 2025-06-02
+### Fixed
+- MeshDrawer now correctly scale submeshes based on the root position instead of their own local position
