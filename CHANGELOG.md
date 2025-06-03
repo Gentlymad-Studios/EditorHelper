@@ -126,3 +126,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.3.6] - 2025-06-02
 ### Fixed
 - MeshDrawer now correctly scale submeshes based on the root position instead of their own local position
+
+## [0.3.7] - 2025-06-03
+### Added
+- add Method to Hide SelectionOutline Temporarily

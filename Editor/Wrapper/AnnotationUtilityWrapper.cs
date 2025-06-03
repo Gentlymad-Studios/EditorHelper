@@ -10,6 +10,18 @@ namespace EditorHelper {
         private static MethodInfo getAnnotations;
         private static MethodInfo setGizmoEnabled;
         private static MethodInfo setIconEnabled;
+        private static FieldInfo sceneOutlineParents;
+        private static FieldInfo sceneOutlineChildren;
+#if UNITY_2023_3_OR_NEWER
+	    const string FIELD_PARENTS = "s_CachedParentRenderersForOutlining";
+	    const string FIELD_CHILDREN = "s_CachedChildRenderersForOutlining";
+#elif UNITY_2022_2_OR_NEWER
+        const string FIELD_PARENTS = "s_CachedParentRenderersFromSelection";
+        const string FIELD_CHILDREN = "s_CachedChildRenderersFromSelection";
+#elif UNITY_2022_1_OR_NEWER
+	    const string FIELD_PARENTS = "m_CachedParentRenderersFromSelection";
+	    const string FIELD_CHILDREN = "m_CachedChildRenderersFromSelection";
+#endif
 
         static AnnotationUtilityWrapper() {
             assembly = Assembly.GetAssembly(typeof(Editor));
@@ -17,6 +29,8 @@ namespace EditorHelper {
             getAnnotations = type.GetMethod("GetAnnotations", BindingFlags.Static | BindingFlags.NonPublic);
             setGizmoEnabled = type.GetMethod("SetGizmoEnabled", BindingFlags.Static | BindingFlags.NonPublic);
             setIconEnabled = type.GetMethod("SetIconEnabled", BindingFlags.Static | BindingFlags.NonPublic);
+            sceneOutlineParents = typeof(SceneView).GetField(FIELD_PARENTS, BindingFlags.Static | BindingFlags.NonPublic);
+            sceneOutlineChildren = typeof(SceneView).GetField(FIELD_CHILDREN, BindingFlags.Static | BindingFlags.NonPublic);
         }
 
         /// <summary>
@@ -130,6 +144,17 @@ namespace EditorHelper {
             iconEnabled = false;
             gizmoEnabled = false;
             return false;
+        }
+
+        /// <summary>Hides selection outlines until a new selection is made,
+        /// bypassing the user scene view setting</summary>
+        public static void HideSelectionOutlinesTemporarily() {
+#if !UNITY_2022_1_OR_NEWER
+			throw new NotImplementedException( $"Outline hiding not implemented for unity {Application.unityVersion}" );
+#endif
+            sceneOutlineParents.SetValue(null, new int[] { });
+            sceneOutlineChildren.SetValue(null, new int[] { });
+            SceneView.RepaintAll();
         }
     }
 }
