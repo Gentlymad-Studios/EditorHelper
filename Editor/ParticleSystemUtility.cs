@@ -160,7 +160,8 @@ namespace EditorHelper {
                 // Update system to stop state
                 particleSystem.Stop(false, ParticleSystemStopBehavior.StopEmittingAndClear);
 
-                yield return null;
+                //comment this out because of errors when using shorter totalTimes
+                //yield return null;
 
                 if (isAutoRandomSeed) {
                     // Restore random seed value back to the original value
