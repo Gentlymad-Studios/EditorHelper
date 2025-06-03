@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Unity.EditorCoroutines.Editor;
 using System;
+using UnityEditor;
 
 namespace EditorHelper {
     /// <summary>
@@ -26,7 +27,9 @@ namespace EditorHelper {
         /// <param name="particleSystem">The Particle System to play.</param>
         /// <param name="withChildren">Play all children particles as well.</param>
         /// <param name="effectFinishedEditorEvent">Action called when the system is finished. [Does Not Work Outside Of Unity Editor].</param>
-        public static void PlayInEditor(ParticleSystem particleSystem, bool withChildren, Action effectFinishedEditorEvent) {
+        /// <param name="useDeltaTime">Use Delta Time instead of FullTime, this is needed if you have SubEmitters.</param>
+        /// <param name="ignoreLifeTimeMultiplier">Ignores the startLifetimeMultiplier in the caluculation of the totalTime, just use duration.</param>
+        public static void PlayInEditor(ParticleSystem particleSystem, bool withChildren, Action effectFinishedEditorEvent, bool useDeltaTime = false, bool ignoreLifeTimeMultiplier = false) {
             // When playing the system in the editor, we have to control each child individually
             ParticleSystem[] particleSystems = withChildren ? particleSystem.GetComponentsInChildren<ParticleSystem>(true) : new[] { particleSystem.GetComponentInChildren<ParticleSystem>(true) };
 
@@ -69,7 +72,7 @@ namespace EditorHelper {
                     }
                 }
 
-                EditorCoroutine currentEditorCoroutine = EditorCoroutineUtility.StartCoroutine(PlaySingleParticleSystemInEditor(childParticleSystem, OnEffectFinished), childParticleSystem);
+                EditorCoroutine currentEditorCoroutine = EditorCoroutineUtility.StartCoroutine(PlaySingleParticleSystemInEditor(childParticleSystem, OnEffectFinished, useDeltaTime, ignoreLifeTimeMultiplier), childParticleSystem);
                 _simulationCoroutinesByParticleSystem.Add(childParticleSystem, currentEditorCoroutine);
             }
         }
@@ -113,7 +116,7 @@ namespace EditorHelper {
         /// <param name="particleSystem">The Particle System to play.</param>
         /// <param name="effectFinished">Action called when the system is finished.</param>
         /// <returns>An IEnumerator for the coroutine.</returns>
-        private static IEnumerator PlaySingleParticleSystemInEditor(ParticleSystem particleSystem, Action effectFinished = null) {
+        private static IEnumerator PlaySingleParticleSystemInEditor(ParticleSystem particleSystem, Action effectFinished = null, bool useDeltaTime = false, bool ignoreLifeTimeMultiplier = false) {
             bool isAutoRandomSeed = particleSystem.useAutoRandomSeed;
             _autoRandomSeedByParticleSystem.Add(particleSystem, isAutoRandomSeed);
             particleSystem.Stop(false, ParticleSystemStopBehavior.StopEmittingAndClear);
@@ -121,7 +124,7 @@ namespace EditorHelper {
             yield return null;
 
             ParticleSystem.MainModule mainSystem = particleSystem.main;
-            float totalTime = mainSystem.startLifetimeMultiplier * mainSystem.duration;
+            float totalTime = ignoreLifeTimeMultiplier ? mainSystem.duration : mainSystem.startLifetimeMultiplier * mainSystem.duration;
             particleSystem.randomSeed = (uint)UnityEngine.Random.Range(0, int.MaxValue);
             float curTime = 0.0f;
 
@@ -132,11 +135,21 @@ namespace EditorHelper {
 
             // Time.deltaTime does not work in editor so we use the Unity Time Since Startup
             float initialTime = (float)UnityEditor.EditorApplication.timeSinceStartup;
+            float lastTime = initialTime;
 
             while (curTime < totalTime && particleSystem != null && particleSystem.gameObject.activeInHierarchy) {
-                // In order to play in edit mode, both Simulate and time have to be changed
-                particleSystem.Simulate(curTime, false, true);
-                particleSystem.time = curTime;
+                if (useDeltaTime) {
+                    float currentTime = (float)EditorApplication.timeSinceStartup;
+                    float deltaTime = currentTime - lastTime;
+                    lastTime = currentTime;
+
+                    particleSystem.Simulate(deltaTime, false, false, false);
+                } else {
+                    // In order to play in edit mode, both Simulate and time have to be changed
+                    particleSystem.Simulate(curTime, false, true);
+                    particleSystem.time = curTime;
+                }
+
                 // Track delta between start and current Unity Time Since Startup
                 curTime = (float)UnityEditor.EditorApplication.timeSinceStartup - initialTime;
 
